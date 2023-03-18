@@ -1,0 +1,206 @@
+.header {
+    justify-content: center;
+    align-items: center;
+    background-color: crimson;
+    font-size: 44px;
+    font-weight: bold;
+    text-align: center;
+    font-family: fantasy;
+  }
+  
+  /* Left Box Style */
+  .box {
+    margin-top: 20px;
+    margin-left: 30%;
+    width: 40%;
+    height: 80px;
+    color: white;
+    background-color: coral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* info Style */
+.info {
+     margin-left: 30%;
+    font-size: 20px;
+    width: 40%;
+    height: 100%;
+    background-color: coral;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.info-b {
+    margin-left: 30%;
+    font-size: 20px;
+    width: 40%;
+    background-color: coral;
+  }
+
+
+/* User Style */
+.modal {
+  position: fixed;
+  top: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+}
+
+.modal-message {
+  margin-left: 30%;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  background-color: #fff;
+}
+
+.modal.success {
+  background-color: #68d391;
+  color: #fff;
+}
+
+.modal.error {
+  background-color: #f56565;
+  color: #fff;
+  margin-right: 40px;
+}
+
+.user {
+  background-color: purple;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 20px;
+  border-radius: 0.375rem;
+  width: 100%;
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40%;
+}
+
+.user p {
+  margin: 0;
+  padding: 0;
+}
+
+.user .name {
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.user .balance {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.user .actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.user .actions button {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.panaikinti {
+  Display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user .actions .withdraw-button {
+  background-color: #ed8936;
+  color: #fff;
+}
+
+.user .actions .delete-button {
+  background-color: #e53e3e;
+  color: #fff;
+}
+
+.navbar {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 30%;
+  width: 40%;
+  color: white;
+  background-color: coral;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.nav-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+}
+
+.nav-left span:nth-child(2) {
+  margin-left: 10px;
+}
+
+.nav-right {
+  color: darkred;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+}
+
+.nav-link {
+  margin: 0 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .info, .box {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+  }
+  .user {
+    margin-left: 150px;
+    margin-right: 0px;
+    max-width: 50%;
+  }
+}
