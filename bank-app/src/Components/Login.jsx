@@ -1,30 +1,43 @@
-import { useContext, useState } from "react";
-import axios from 'axios';
+import { useContext, useState } from 'react';
+import { Global } from './Global';
 
 function Login() {
+  const [userName, setUserName] = useState(null);
+  const [error, setError] = useState(null);
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
 
-    const [error, setError] = useState(null);
-    const [name, setName] = useState('');
-    const [psw, setPsw] = useState('');
+  const { setLogged, setAuthName, setRoute } = useContext(Global);
 
-    const {setLogged, setAuthName, setRoute} = useContext('');
-
-    const login = _ => {
-        axios.post('http://localhost:3003/login', { name, psw }, { withCredentials: true })
-            .then(res => {
-                console.log(res.data);
-                if (res.data.status === 'ok') {
-                    setName('');
-                    setPsw('');
-                    setError(null);
-                    setLogged(true);
-                    setAuthName(res.data.name);
-                    setRoute('home');
-                } else {
-                    setError(true);
-                }
-            });
-    }
+  // LOGIN FUNCTION
+  const login = () => {
+    fetch('http://localhost:3003/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        name: name,
+        password: password,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Login success') {
+          setLogged(true);
+          setRoute('accounts');
+          setName('');
+          setPassword('');
+          setError(null);
+          setAuthName(data.name);
+          setUserName(data.name);
+        } else {
+          setError(true);
+          setUserName(null);
+        }
+      });
+  };
 
     return (
         <div className="container">
@@ -38,17 +51,17 @@ function Login() {
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">
-                                <span>Hello, guest</span>
+                                <span>Sveiki, svečias</span>
                             </h5>
                             <div className="mb-3">
-                                <label className="form-label">Name</label>
-                                <input type="text" className="form-control" value={name} onChange={e => setName(e.target.value)} />
+                                <label className="form-label">Vardas</label>
+                                <input type="text" className="form-control" id='username' value={name} onChange={e => setName(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Password</label>
-                                <input type="password" className="form-control" value={psw} onChange={e => setPsw(e.target.value)} />
+                                <label className="form-label">Slaptažodis</label>
+                                <input type="password" className="form-control" id='password' value={password} onChange={e => setPassword(e.target.value)} />
                             </div>
-                            <button className="btn btn-primary m-1" onClick={login}>Login</button>
+                            <button type='button' className="btn btn-primary m-1" onClick={login}>Prisijungti</button>
                         </div>
                     </div>
                 </div>

@@ -1,25 +1,27 @@
-import { useContext } from "react";
-import Auth from "./Auth";
-import { Global } from "./Global";
-import Home from "./Home";
-import Login from "./Login";
-import AccountList from "./AccountList";
+import { useContext } from 'react';
+import Auth from './Auth';
+import { Global } from './Global';
+import Login from './Login';
+import Bank from './Bank';
+import Home from './Home';
 
 function Routes() {
+  const { route } = useContext(Global);
 
-    const {route} = useContext(Global);
-
-
-    switch(route) {
-        case 'home': return <Auth roles={''}><Home /></Auth>
-        case 'accountlist': return <Auth roles={''}><AccountList/></Auth> 
-
-        case 'login': return <Login />
-        default: return null
-    }
-
-
-
+  switch (route) {
+    case 'accounts':
+      return (
+        <Auth>
+          <Bank />
+        </Auth>
+      );
+    case 'login':
+      return <Login />;
+    case 'home':
+      return <Home />;
+      
+    default:
+      return null;
+  }
 }
-
 export default Routes;

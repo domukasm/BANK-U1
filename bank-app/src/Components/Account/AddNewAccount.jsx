@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import userService from "../Services/userService";
+import { useState, useContext } from "react";
+import { Global } from "../Global";
 
 const AddUser = ({ onBack, onAddUser }) => {
+    const {setNewAccount} = useContext(Global);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
@@ -19,16 +19,13 @@ const AddUser = ({ onBack, onAddUser }) => {
             lastName,
             balance: 0,
         };
-        let response = await userService.addNewUser(data);
-        if (response.ok) {
-            // Display a success message to the user
-            alert("Paskyra pridėta sėkmingai");
-        } else {
-            // Handle errors
-            alert("Upsy įvyko klaidauskas");
+        setNewAccount(data)
+        if (typeof onBack === "function") {
+            onBack();
         }
-        onAddUser(data);
-        onBack();
+        if (typeof onAddUser === 'function') {
+            onAddUser(data);
+          }
     };
     return (
         <div className="info">
@@ -53,7 +50,6 @@ const AddUser = ({ onBack, onAddUser }) => {
                     ></input>
                 </div>
                 <div>
-                    <input type="button" value="Atgal" onClick={onBack}></input>
                     <input
                         disabled={firstName.length < 2 || lastName.length < 2}
                         type="submit"

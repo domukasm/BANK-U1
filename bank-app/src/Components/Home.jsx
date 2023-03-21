@@ -1,92 +1,63 @@
-import { useState, useEffect } from "react";
-import AccountList from "./AccountList";
-import { dummyUserList } from "./UserData";
-import AddNewAccount from "./AddNewAccount";
-import calculateTotalFunds from "../functions/calculateTotalFunds";
-import AccountFilter from "./AccountFilter";
-import userService from "../Services/userService";
-import Nav from './Nav';
+import { useState, useEffect, useContext } from "react";
+import { Global } from "./Global";
+import Teletubbies from "../assets/teletubbies.jpg"
+import bebrudarba from "../assets/bebrudarba.png"
 
 const Home = () => {
-    const [accountList, setAccountList] = useState(dummyUserList);
-    const [filteredUsers, setFilteredUsers] = useState([]);
-    const [shownPage, setShownPage] = useState("list");
-    const [refresh, setRefresh] = useState(true);
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const users = await userService.fetchUsers();
-            if (!users) {
-                alert("Vartotojas Nerastas");
-            }
-            updateLists(users);
+    const [accountFilter, setAccountFilter] = useState('All')
+    const { accounts } = useContext(Global)
+
+    const AccountSummary = () => {
+        const {accounts} = useContext(Global)
+        const totalMoney = accounts.reduce(
+            (total, current) => total + current.balance,
+            0
+        );
+
+        const filterHandler = e => {
+            setAccountFilter(e.target.value);
         };
-        fetchUsers();
-    }, [refresh]);
-    const addUserClickHandler = () => {
-        setShownPage("add");
-    };
-    const showListPage = () => {
-        setShownPage("list");
-    };
-    const deleteUser = async (data) => {
-        await userService.destroyUser(data);
-        setRefresh((val) => !val);
-    };
-    const addUser = (data) => {
-        updateLists([...accountList, data]);
-        setRefresh((val) => !val);
-    };
-    const updateLists = (accountList) => {
-        setAccountList(accountList);
-        setFilteredUsers(accountList);
-    };
-    return (
-        <>
-            <article className="header">
-                <header>
-                    <div className="header">
-                        <h1>Bitutės bankas</h1>
-                    </div>
-                    <div className="statistics">
-                        <div className="client-number">
-                        Iš viso paskyrų: {accountList.length}
-                        </div>
-                        <div>
-                        Iš viso pinigų:{" "}
-                            {calculateTotalFunds(accountList).toFixed(2)} €
-                        </div>
-                    </div>
-                </header>
-            </article>
+    
+        const filteredAccounts = accounts
+            ? accounts.filter(acc =>
+                accountFilter === 'withMoney'
+                  ? acc.sum > 0
+                  : accountFilter === 'noMoney'
+                  ? acc.sum === 0
+                  : true,
+            )
+            : [];
 
-            <Nav />
+        return (
+            <>
+                <article className="header">
+                    <header>
+                        <div className="header">
+                            <h1>Bitutės bankas</h1>
+                        </div>
+                        <div className="statistics">
+                            <div className="client-number">
+                            Iš viso paskyrų: {accounts.length}
+                            </div>
+                            <div>
+                            Iš viso pinigų:{" "}
+                            {totalMoney.toFixed(2)} €
+                            </div>
+                        </div>
+                    </header>
+                </article>
+                <div style={{ paddingLeft: '550px' , paddingTop: '50px' }}>
+                    <img src={Teletubbies} alt="teletubbies" style={{ width: '400px', }}/>
+                    <div style={{ paddingLeft: '0' , paddingTop: '20px' }}>
+                        <img src={bebrudarba} alt="bebrudarba" style={{ width: '400px', }}/>
+                    </div>
+                </div>
 
-            <section className="section-content">
-                {shownPage === "list" && (
-                    <>
-                        <input
-                            type="button"
-                            value="Pridėti Paskyrą"
-                            onClick={addUserClickHandler}
-                            className="info"
-                        />
-                        <AccountFilter
-                            userList={accountList}
-                            setFilteredUsers={setFilteredUsers}
-                        />
-                        <AccountList
-                            list={filteredUsers}
-                            onDelete={deleteUser}
-                            setRefresh={setRefresh}
-                        />
-                    </>
-                )}
-                {shownPage === "add" && (
-                    <AddNewAccount onBack={showListPage} onAddUser={addUser} />
-                )}
-            </section>
-        </>
-    );
+            </>
+        );
+    };
+
+    return <AccountSummary />;
 };
 
 export default Home;

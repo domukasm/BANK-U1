@@ -1,6 +1,10 @@
-const AccountSummary = ({ accounts }) => {
+import { useContext, useEffect } from 'react';
+import { Global } from '../Global'
+
+const AccountSummary = () => {
+    const {accounts} = useContext(Global)
     const totalMoney = accounts.reduce(
-        (total, current) => total + current.sum,
+        (total, current) => total + current.balance,
         0
     );
 
@@ -16,7 +20,7 @@ const AccountSummary = ({ accounts }) => {
                     </span>
                     Iš viso pinigų:
                     <span>
-                        ${totalMoney.toFixed(2)}
+                    €{totalMoney.toFixed(2)}
                     </span>
             </div>
             </div>
